@@ -20,7 +20,7 @@ const sketch = ({ context, width, height }) => {
     "bottom": height * 0.78},
   }
 
-  const cell = 20;
+  const cell = 25;
   const cols = Math.floor(width/cell);
   const rows = Math.floor(height/cell);
 
@@ -57,6 +57,31 @@ const sketch = ({ context, width, height }) => {
     new Agent( new Dot(width * 0.490234375, height * 0.92041015625)),
   ];
 
+  const jacket = [
+    new Agent( new Dot(width * 0.20751953125, height * 0.71044921875)),
+    new Agent( new Dot(width * 0.173828125, height * 0.72021484375)),
+    new Agent( new Dot(width * 0.146484375, height * 0.7412109375)),
+    new Agent( new Dot(width * 0.2880859375, height * 0.828125)),
+    new Agent( new Dot(width * 0.2431640625, height * 0.86181640625)),
+    new Agent( new Dot(width * 0.20751953125, height * 0.89501953125)),
+    new Agent( new Dot(width * 0.1513671875, height * 0.9560546875)),
+    new Agent( new Dot(width * 0.31, height * 0.84228515625)),
+    new Agent( new Dot(width * 0.44, height * 0.86669921875)),
+    new Agent( new Dot(width * 0.490234375, height * 0.92578125)),
+    new Agent( new Dot(width * 0.48046875, height * 0.98046875)),
+    new Agent( new Dot(width * 0.53515625, height * 0.8642578125)),
+    new Agent( new Dot(width * 0.51708984375, height * 0.92236328125)),
+    new Agent( new Dot(width * 0.51220703125, height * 0.98046875)),
+    new Agent( new Dot(width * 0.70166015625, height * 0.794921875)),
+    new Agent( new Dot(width * 0.73681640625, height * 0.8642578125)),
+    new Agent( new Dot(width * 0.77197265625, height * 0.93359375)),
+    new Agent( new Dot(width * 0.80615234375, height * 0.9853515625)),
+    new Agent( new Dot(width * 0.76806640625, height * 0.71044921875)),
+    new Agent( new Dot(width * 0.80126953125, height * 0.7763671875)),
+    new Agent( new Dot(width * 0.83447265625, height * 0.84228515625)),
+    new Agent( new Dot(width * 0.79150390625, height * 0.66943359375)),
+  ]
+
   return ({ context, width, height, frame }) => {
     typeContext.fillStyle = "black";
     typeContext.fillRect(0,0, cols, rows);
@@ -76,7 +101,38 @@ const sketch = ({ context, width, height }) => {
         agent.draw(context);
         agent.bounce();
       });
-    
+
+      context.strokeStyle = "yellow";
+
+      jacket.forEach( function(agent) {
+        agent.update();
+        agent.draw(context);
+        agent.bounce();
+      });
+
+      for (let i = 0; i< jacket.length - 4; i++) {
+
+        for (let j = i + 1; j < i + 5; j++) {
+
+          context.beginPath();
+
+          if (j == i + 1) {
+            context.lineWidth = "16";
+            context.strokeStyle = "brown";
+          }
+          else {
+            context.strokeStyle = "red";
+            context.lineWidth = "3";
+          }
+
+          context.moveTo(jacket[i].position.x , jacket[i].position.y );
+          context.lineTo(jacket[j].position.x + 10, jacket[j].position.y + 10);
+          
+          context.stroke();
+          
+        }
+      }
+
       for (let p = hood.length-1; p > 0; p=p-1) {
 
         context.strokeStyle = "red";
@@ -97,10 +153,13 @@ const sketch = ({ context, width, height }) => {
           context.lineWidth = 6;
         
           context.moveTo(hood[p].position.x , hood[p].position.y );
-          context.lineTo(hood[p - 1].position.x + 10, hood[p - 1].position.y + 10);
+          context.lineTo(hood[p - 1].position.x , hood[p - 1].position.y );
           context.stroke();
         }
       }
+
+      
+
     }, false);
     img.src = "./assets/EXP2.jpg";
 
@@ -132,15 +191,7 @@ function pixelate(img, context, width, height, cell, cols, rows, definition, fra
     context.translate(x,y);
 
     if ((x < definition.hood_outline.left) || (x > definition.hood_outline.right) || (y < definition.hood_outline.top) || (y > definition.hood_outline.bottom)) {
-      context.translate(-cell*0.6, cell);
       
-      const glyph = getHoodGlyph(r,g,b, cell);
-
-      context.font = `${glyph.weight} ${glyph.size}px serif`;
-      context.fillStyle = glyph.color;
-      context.textBaseline = "top";
-      context.textAlign = "left";
-      context.fillText(glyph.text, 0, 0); 
     }
     else {
       context.fillStyle = getGlyph(r,g,b).color;
@@ -148,30 +199,12 @@ function pixelate(img, context, width, height, cell, cols, rows, definition, fra
       context.fillText(getGlyph(r,g,b).text, 0, 0);
     }
 
-    if ((r<10) && (g<10) && (b>48)) {
-
-      const n = random.noise3D(x,y,frame*10,0.001);
-      const scale = math.mapRange(n, -1, 1 ,1, 30);
-
-      context.beginPath();
-
-      context.rotate( n * Math.PI * 0.2);
-      context.lineWidth = scale;
-      context.lineCap = "butt"
-
-      context.strokeStyle = `red`;
-
-      context.moveTo(0,0);
-      context.lineTo(cell*0.8,0);
-      context.stroke();
-    }
-
     context.restore();
   }
 
 }
 
-function getHoodGlyph(r,g,b, cell) {
+/*function getHoodGlyph(r,g,b, cell) {
   if ( ((r==15) && (g==16) && (b==11)) || ((r < 20) &&(g < 20) &&(b < 20)))  {
     return {"text":" ","color":"white", "size":cell*2, "weight": 300, }
   }
@@ -179,7 +212,7 @@ function getHoodGlyph(r,g,b, cell) {
     return {"text":"-","color":"red", "size":cell * 3, "weight": 900,};
   }
   return {"text":" ","color":"#3d0208", "size":cell*2, "weight": 300,}
-}
+}*/
 
 function getGlyph(r,g,b) {  
   if ((g < 50) && (b < 50)) return {"text":" ","color":"white"};
@@ -193,8 +226,8 @@ class Dot {
   constructor(x,y) {
     this.x = x;
     this.y = y;
-    this.velocity_x = random.range(-2,2);
-    this.velocity_y = random.range(-2,2);
+    this.velocity_x = random.range(-1,1);
+    this.velocity_y = random.range(-1,1);
     this.original_x = x;
     this.original_y = y;
   }
@@ -204,7 +237,7 @@ class Agent {
 
   constructor(dot){
     this.position = dot;
-    this.radius = 7;
+    this.radius = 10;
   }
 
   draw(context) {
@@ -233,10 +266,10 @@ class Agent {
   }
 
   bounce() {
-    if (Math.abs(this.position.x - this.position.original_x) > 30 ) {
+    if (Math.abs(this.position.x - this.position.original_x) > 10 ) {
       this.position.velocity_x = -this.position.velocity_x;
     }
-    if (Math.abs(this.position.y - this.position.original_y) > 30 ) {
+    if (Math.abs(this.position.y - this.position.original_y) > 10 ) {
       this.position.velocity_y = -this.position.velocity_y;
     }
   }
