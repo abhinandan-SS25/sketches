@@ -20,7 +20,7 @@ const sketch = ({ context, width, height }) => {
     "bottom": height * 0.78},
   }
 
-  const cell = 25;
+  const cell = 20;
   const cols = Math.floor(width/cell);
   const rows = Math.floor(height/cell);
 
@@ -158,10 +158,8 @@ const sketch = ({ context, width, height }) => {
         }
       }
 
-      
-
     }, false);
-    img.src = "./assets/EXP2.jpg";
+    img.src = "./assets/hooded_r.jpg";
 
     
   };
@@ -195,7 +193,7 @@ function pixelate(img, context, width, height, cell, cols, rows, definition, fra
     }
     else {
       context.fillStyle = getGlyph(r,g,b).color;
-      context.font = `${cell * 2}px serif`;
+      context.font = `${cell * 4}px serif`;
       context.fillText(getGlyph(r,g,b).text, 0, 0);
     }
 
@@ -215,11 +213,11 @@ function pixelate(img, context, width, height, cell, cols, rows, definition, fra
 }*/
 
 function getGlyph(r,g,b) {  
-  if ((g < 50) && (b < 50)) return {"text":" ","color":"white"};
-  if ((r < 100) && (g < 100) && (b < 100)) return {"text":".","color":"white"};
-  if ((r < 150) && (g < 150) && (b < 150)) return {"text":"-","color":"white"};
-  if ((r < 200) && (g < 200) && (b < 200)) return {"text":"+","color":"white"};
-  return {"text":random.pick([".", "_", "/"]),"color":"white"}
+  if ((g < 50)) return {"text":" ","color":"white"};
+  if ((r < 100)) return {"text":"-","color":"#696969"};
+  if ((r < 150)) return {"text":"-","color":"#c4c4c4"};
+  if ((r < 200)) return {"text":"-","color":"#dedede"};
+  return {"text":random.pick(["."]),"color":"white"}
 }
 
 class Dot {
