@@ -4,7 +4,7 @@ const math = require('canvas-sketch-util/math');
 
 
 const settings = {
-  dimensions: [ 2048, 2048 ],
+  dimensions: [ 1080, 1080 ],
   animate: false,
 };
 
@@ -20,7 +20,7 @@ const sketch = ({ context, width, height }) => {
     "bottom": height * 0.78},
   }
 
-  const cell = 20;
+  const cell = 10;
   const cols = Math.floor(width/cell);
   const rows = Math.floor(height/cell);
 
@@ -84,7 +84,7 @@ const sketch = ({ context, width, height }) => {
         
         if (p > hood.length/2 + 3) {
 
-          context.lineWidth = 12;
+          context.lineWidth = 6;
           
           context.moveTo(hood[p].position.x, hood[p].position.y);
           context.lineTo(hood[p - 2].position.x + 10, hood[p - 2].position.y + 10);
@@ -95,7 +95,7 @@ const sketch = ({ context, width, height }) => {
           context.stroke();
         }
         else {
-          context.lineWidth = 6;
+          context.lineWidth = 2;
         
           context.moveTo(hood[p].position.x , hood[p].position.y );
           context.lineTo(hood[p - 1].position.x , hood[p - 1].position.y );
@@ -177,7 +177,7 @@ function getGlyph(r,g,b) {
 
 function getJGlyph(r,g,b) {  
   if ((b < 80)) return {"text":" "};
-  if ((b < 100)) return {"text":"~"};
+  if ((b < 100)) return {"text":"-.-"};
   if ((b < 150)) return {"text":random.pick([";","A","=","/"])};
   if ((b < 220)) return {"text":"-"};
   return {"text":" "}
