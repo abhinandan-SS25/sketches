@@ -202,16 +202,6 @@ function pixelate(img, context, width, height, cell, cols, rows, definition, fra
 
 }
 
-/*function getHoodGlyph(r,g,b, cell) {
-  if ( ((r==15) && (g==16) && (b==11)) || ((r < 20) &&(g < 20) &&(b < 20)))  {
-    return {"text":" ","color":"white", "size":cell*2, "weight": 300, }
-  }
-  if ((r>200) && (g<10) && (b<10)) {
-    return {"text":"-","color":"red", "size":cell * 3, "weight": 900,};
-  }
-  return {"text":" ","color":"#3d0208", "size":cell*2, "weight": 300,}
-}*/
-
 function getGlyph(r,g,b) {  
   if ((g < 50)) return {"text":" ","color":"white"};
   if ((r < 100)) return {"text":"-","color":"#696969"};
