@@ -5,7 +5,7 @@ const math = require('canvas-sketch-util/math');
 
 const settings = {
   dimensions: [ 2048, 2048 ],
-  animate: true,
+  animate: false,
 };
 
 const typeCanvas = document.createElement("canvas");
@@ -57,31 +57,6 @@ const sketch = ({ context, width, height }) => {
     new Agent( new Dot(width * 0.490234375, height * 0.92041015625)),
   ];
 
-  const jacket = [
-    new Agent( new Dot(width * 0.20751953125, height * 0.71044921875)),
-    new Agent( new Dot(width * 0.173828125, height * 0.72021484375)),
-    new Agent( new Dot(width * 0.146484375, height * 0.7412109375)),
-    new Agent( new Dot(width * 0.2880859375, height * 0.828125)),
-    new Agent( new Dot(width * 0.2431640625, height * 0.86181640625)),
-    new Agent( new Dot(width * 0.20751953125, height * 0.89501953125)),
-    new Agent( new Dot(width * 0.1513671875, height * 0.9560546875)),
-    new Agent( new Dot(width * 0.31, height * 0.84228515625)),
-    new Agent( new Dot(width * 0.44, height * 0.86669921875)),
-    new Agent( new Dot(width * 0.490234375, height * 0.92578125)),
-    new Agent( new Dot(width * 0.48046875, height * 0.98046875)),
-    new Agent( new Dot(width * 0.53515625, height * 0.8642578125)),
-    new Agent( new Dot(width * 0.51708984375, height * 0.92236328125)),
-    new Agent( new Dot(width * 0.51220703125, height * 0.98046875)),
-    new Agent( new Dot(width * 0.70166015625, height * 0.794921875)),
-    new Agent( new Dot(width * 0.73681640625, height * 0.8642578125)),
-    new Agent( new Dot(width * 0.77197265625, height * 0.93359375)),
-    new Agent( new Dot(width * 0.80615234375, height * 0.9853515625)),
-    new Agent( new Dot(width * 0.76806640625, height * 0.71044921875)),
-    new Agent( new Dot(width * 0.80126953125, height * 0.7763671875)),
-    new Agent( new Dot(width * 0.83447265625, height * 0.84228515625)),
-    new Agent( new Dot(width * 0.79150390625, height * 0.66943359375)),
-  ]
-
   return ({ context, width, height, frame }) => {
     typeContext.fillStyle = "black";
     typeContext.fillRect(0,0, cols, rows);
@@ -102,36 +77,6 @@ const sketch = ({ context, width, height }) => {
         agent.bounce();
       });
 
-      context.strokeStyle = "yellow";
-
-      jacket.forEach( function(agent) {
-        agent.update();
-        agent.draw(context);
-        agent.bounce();
-      });
-
-      for (let i = 0; i< jacket.length - 4; i++) {
-
-        for (let j = i + 1; j < i + 5; j++) {
-
-          context.beginPath();
-
-          if (j == i + 1) {
-            context.lineWidth = "16";
-            context.strokeStyle = "brown";
-          }
-          else {
-            context.strokeStyle = "red";
-            context.lineWidth = "3";
-          }
-
-          context.moveTo(jacket[i].position.x , jacket[i].position.y );
-          context.lineTo(jacket[j].position.x + 10, jacket[j].position.y + 10);
-          
-          context.stroke();
-          
-        }
-      }
 
       for (let p = hood.length-1; p > 0; p=p-1) {
 
@@ -159,7 +104,7 @@ const sketch = ({ context, width, height }) => {
       }
 
     }, false);
-    img.src = "./assets/hooded_r.jpg";
+    img.src = "./assets/EXP.jpg";
 
     
   };
@@ -188,13 +133,33 @@ function pixelate(img, context, width, height, cell, cols, rows, definition, fra
 
     context.translate(x,y);
 
-    if ((x < definition.hood_outline.left) || (x > definition.hood_outline.right) || (y < definition.hood_outline.top) || (y > definition.hood_outline.bottom)) {
-      
-    }
-    else {
+    if ((x > definition.hood_outline.left) && (x < definition.hood_outline.right) && (y > definition.hood_outline.top) && (y < definition.hood_outline.bottom)) {
       context.fillStyle = getGlyph(r,g,b).color;
       context.font = `${cell * 4}px serif`;
+      
       context.fillText(getGlyph(r,g,b).text, 0, 0);
+    }
+    else {
+      if ((r<10) && (g<10) && (b>68)) {
+        context.fillStyle = "red";
+
+        if (random.range(0,1)<0.1) {
+          context.font = `${cell * 7}px serif`;
+        }
+        else if (random.range(0,1)<0.005) {
+          context.font = `${cell * 8}px serif`;
+        }
+        else {
+          context.font = `${cell * 4}px serif`;
+        }
+
+        if (getJGlyph(r,g,b).text == "-") {
+          context.font = `${cell * 10}px serif`;
+        }
+
+        context.fillText(getJGlyph(r,g,b).text, 0, 0);
+      }
+
     }
 
     context.restore();
@@ -202,24 +167,21 @@ function pixelate(img, context, width, height, cell, cols, rows, definition, fra
 
 }
 
-/*function getHoodGlyph(r,g,b, cell) {
-  if ( ((r==15) && (g==16) && (b==11)) || ((r < 20) &&(g < 20) &&(b < 20)))  {
-    return {"text":" ","color":"white", "size":cell*2, "weight": 300, }
-  }
-  if ((r>200) && (g<10) && (b<10)) {
-    return {"text":"-","color":"red", "size":cell * 3, "weight": 900,};
-  }
-  return {"text":" ","color":"#3d0208", "size":cell*2, "weight": 300,}
-}*/
-
 function getGlyph(r,g,b) {  
   if ((g < 50)) return {"text":" ","color":"white"};
   if ((r < 100)) return {"text":"-","color":"#696969"};
   if ((r < 150)) return {"text":"-","color":"#c4c4c4"};
   if ((r < 200)) return {"text":"-","color":"#dedede"};
-  return {"text":random.pick(["."]),"color":"white"}
+  return {"text":random.pick(["-"]),"color":"white"}
 }
 
+function getJGlyph(r,g,b) {  
+  if ((b < 80)) return {"text":" "};
+  if ((b < 100)) return {"text":"~"};
+  if ((b < 150)) return {"text":random.pick([";","A","=","/"])};
+  if ((b < 220)) return {"text":"-"};
+  return {"text":" "}
+}
 class Dot {
   constructor(x,y) {
     this.x = x;
