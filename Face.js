@@ -4,7 +4,7 @@ const math = require('canvas-sketch-util/math');
 
 
 const settings = {
-  dimensions: [ 2048, 2048 ],
+  dimensions: [ 1080, 1080 ],
   animate: true,
 };
 
@@ -20,7 +20,7 @@ const sketch = ({ context, width, height }) => {
     "bottom": height * 0.78},
   }
 
-  const cell = 20;
+  const cell = 10;
   const cols = Math.floor(width/cell);
   const rows = Math.floor(height/cell);
 
@@ -37,19 +37,18 @@ const sketch = ({ context, width, height }) => {
     new Agent( new Dot(width * 0.24853515625, height * 0.76171875)),
     new Agent( new Dot(width * 0.21484375, height * 0.689453125)),
     new Agent( new Dot(width * 0.18212890625, height * 0.57275390625)),
-    new Agent( new Dot(width * 0.17236328125, height * 0.4658203125)),
-    new Agent( new Dot(width * 0.205078125, height * 0.29248046875)),
-    new Agent( new Dot(width * 0.29541015625, height * 0.1416015625)),
-    new Agent( new Dot(width * 0.40, height * 0.1)),
-    new Agent( new Dot(width * 0.5, height * 0.078)),
-    new Agent( new Dot(width * 0.56298828125, height * 0.095)),
-    new Agent( new Dot(width * 0.62451171875, height * 0.1025390625)),
-    new Agent( new Dot(width * 0.701171875, height * 0.1845703125)),
-    new Agent( new Dot(width * 0.7666015625, height * 0.271484375)),
-    new Agent( new Dot(width * 0.81005859375, height * 0.349609375)),
-    new Agent( new Dot(width * 0.83837890625, height * 0.4404296875)),
-    new Agent( new Dot(width * 0.83349609375, height * 0.5302734375)),
-    new Agent( new Dot(width * 0.78515625, height * 0.6572265625)),
+    new Agent( new Dot(width * 0.16236328125, height * 0.4658203125)),
+    new Agent( new Dot(width * 0.185078125, height * 0.29248046875)),
+    new Agent( new Dot(width * 0.27541015625, height * 0.1416015625)),
+    new Agent( new Dot(width * 0.40, height * 0.05)),
+    new Agent( new Dot(width * 0.5, height * 0.041)),
+    new Agent( new Dot(width * 0.60298828125, height * 0.06)),
+    new Agent( new Dot(width * 0.741171875, height * 0.2145703125)),
+    new Agent( new Dot(width * 0.8066015625, height * 0.291484375)),
+    new Agent( new Dot(width * 0.83005859375, height * 0.369609375)),
+    new Agent( new Dot(width * 0.84837890625, height * 0.4704296875)),
+    new Agent( new Dot(width * 0.85349609375, height * 0.5802734375)),
+    new Agent( new Dot(width * 0.80515625, height * 0.6772265625)),
     new Agent( new Dot(width * 0.72802734375, height * 0.73291015625)),
     new Agent( new Dot(width * 0.65087890625, height * 0.82763671875)),
     new Agent( new Dot(width * 0.53857421875, height * 0.84716796875)),
@@ -64,7 +63,7 @@ const sketch = ({ context, width, height }) => {
     new Agent( new Dot(width * 0.2880859375, height * 0.828125)),
     new Agent( new Dot(width * 0.2431640625, height * 0.86181640625)),
     new Agent( new Dot(width * 0.20751953125, height * 0.89501953125)),
-    new Agent( new Dot(width * 0.1513671875, height * 0.9560546875)),
+    new Agent( new Dot(width * 0.1513671875, height * 0.9860546875)),
     new Agent( new Dot(width * 0.31, height * 0.84228515625)),
     new Agent( new Dot(width * 0.44, height * 0.86669921875)),
     new Agent( new Dot(width * 0.490234375, height * 0.92578125)),
@@ -75,8 +74,8 @@ const sketch = ({ context, width, height }) => {
     new Agent( new Dot(width * 0.70166015625, height * 0.794921875)),
     new Agent( new Dot(width * 0.73681640625, height * 0.8642578125)),
     new Agent( new Dot(width * 0.77197265625, height * 0.93359375)),
-    new Agent( new Dot(width * 0.80615234375, height * 0.9853515625)),
-    new Agent( new Dot(width * 0.76806640625, height * 0.71044921875)),
+    new Agent( new Dot(width * 0.86615234375, height * 0.9853515625)),
+    new Agent( new Dot(width * 0.84806640625, height * 0.65044921875)),
     new Agent( new Dot(width * 0.80126953125, height * 0.7763671875)),
     new Agent( new Dot(width * 0.83447265625, height * 0.84228515625)),
     new Agent( new Dot(width * 0.79150390625, height * 0.66943359375)),
@@ -93,21 +92,17 @@ const sketch = ({ context, width, height }) => {
       context.drawImage(typeCanvas, 0, 0);
       
       pixelate(img, context, width, height, cell, cols, rows, definition, frame);
-    
+      
       context.strokeStyle = "black";
     
       hood.forEach( function(agent) {
-        agent.update();
         agent.draw(context);
-        agent.bounce();
       });
 
-      context.strokeStyle = "yellow";
+      context.strokeStyle = "red";
 
       jacket.forEach( function(agent) {
-        agent.update();
         agent.draw(context);
-        agent.bounce();
       });
 
       for (let i = 0; i< jacket.length - 4; i++) {
@@ -118,10 +113,10 @@ const sketch = ({ context, width, height }) => {
 
           if (j == i + 1) {
             context.lineWidth = "16";
-            context.strokeStyle = "brown";
+            context.strokeStyle = "grey";
           }
           else {
-            context.strokeStyle = "red";
+            context.strokeStyle = "white";
             context.lineWidth = "3";
           }
 
@@ -135,7 +130,7 @@ const sketch = ({ context, width, height }) => {
 
       for (let p = hood.length-1; p > 0; p=p-1) {
 
-        context.strokeStyle = "red";
+        context.strokeStyle = "grey";
         
         if (p > hood.length/2 + 3) {
 
@@ -159,7 +154,7 @@ const sketch = ({ context, width, height }) => {
       }
 
     }, false);
-    img.src = "./assets/hooded_r.jpg";
+    img.src = "./assets/EXP.jpg";
 
     
   };
@@ -180,18 +175,46 @@ function pixelate(img, context, width, height, cell, cols, rows, definition, fra
     const x = col * cell;
     const y= row * cell;
 
+    const xi = col * cell * 3;
+    const yi= row * cell * 3;
+
     context.save();
 
     const r = typeData[i*4+0];
     const g = typeData[i*4+1];
     const b = typeData[i*4+2];
 
-    context.translate(x,y);
+    const ri = typeData[i*3*4+0];
+    const gi = typeData[i*3*4+1];
+    const bi = typeData[i*3*4+2];
 
-    if ((x < definition.hood_outline.left) || (x > definition.hood_outline.right) || (y < definition.hood_outline.top) || (y > definition.hood_outline.bottom)) {
+    if ((xi < definition.hood_outline.left) || (xi > definition.hood_outline.right) || (yi < definition.hood_outline.top) || (yi > definition.hood_outline.bottom)) {
+      if ((ri==15) && (gi==16) && (bi==11)) {
+
+        const n = random.noise3D(xi,yi,frame,0.001);
+        const scale = math.mapRange(n, -1, 1 ,1, 28);
+
+        context.translate(xi,yi);
+        context.rotate( n * Math.PI * 0.2);
+
+        context.strokeStyle = "white";
+        context.lineCap = "round";
+        context.lineWidth = scale;
+
+        context.moveTo(0,0);
+        context.lineTo((cell*3)*0.5, 0);
+
+        context.stroke();
+      }
       
     }
+
+    if ((x < definition.hood_outline.left) || (x > definition.hood_outline.right) || (y < definition.hood_outline.top) || (y > definition.hood_outline.bottom)) {      
+    }
     else {
+
+      context.translate(x,y);
+
       context.fillStyle = getGlyph(r,g,b).color;
       context.font = `${cell * 4}px serif`;
       context.fillText(getGlyph(r,g,b).text, 0, 0);
@@ -200,13 +223,16 @@ function pixelate(img, context, width, height, cell, cols, rows, definition, fra
     context.restore();
   }
 
+  
+  
+
 }
 
 function getGlyph(r,g,b) {  
   if ((g < 50)) return {"text":" ","color":"white"};
   if ((r < 100)) return {"text":"-","color":"#696969"};
   if ((r < 150)) return {"text":"-","color":"#c4c4c4"};
-  if ((r < 200)) return {"text":"-","color":"#dedede"};
+  if ((r < 200)) return {"text":"-","color":"white"};
   return {"text":random.pick(["."]),"color":"white"}
 }
 
