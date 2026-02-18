@@ -1,6 +1,8 @@
 # Sketches
 
-This repository contains a collection of creative sketches implemented in JavaScript (and some Python assets). The outputs for each concept are stored in the `output/` directory. You can browse the generated images and videos via the links below:
+https://github.com/user-attachments/assets/f5a6d481-c98b-4502-93a4-71168b68ef06
+
+This repository contains a collection of creative sketches implemented in JavaScript (and some Python assets) when I first started tinkering with canvasJS and JavaScript. The outputs for each concept are stored in the `output/` directory. You can browse the generated images and videos via the links below:
 
 ## Outputs
 
