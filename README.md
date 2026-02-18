@@ -4,11 +4,11 @@ This repository contains a collection of creative sketches implemented in JavaSc
 
 ## Outputs
 
-- [01](output/01) &ndash; early experiments (PNG images)
-- [02](output/02) &ndash; grid and noise-based sketches (PNG images)
-- [03](output/03) &ndash; animation exports (MP4 videos)
-- [04](output/04) &ndash; additional image experiments (PNG images)
-- [05](output/05) &ndash; recent trials (PNG images)
+- [01](output/01/2022.02.14-19.47.01.png) &ndash; early experiments (Random grids)
+- [02](output/02/2022.02.15-18.23.50.png) &ndash; Wheel
+- [03](output/03/2022.02.16-18.16.19.mp4) &ndash; Floating dots
+- [04](output/04/2022.02.17-17.24.18.png) &ndash; Noisy grid
+- [05](output/05/2022.02.19-09.00.58.png) &ndash; Caligraphy E
 
 ## Structure
 
